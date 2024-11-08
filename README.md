@@ -68,7 +68,7 @@ The `BankAccount.sol` file contains the Solidity smart contract that implements 
 4. Deploy the smart contract to a local Ethereum network:
    ```
    npx hardhat node
-   npx hardhat run scripts/deploy.js --network localhost
+   npx hardhat run .\ignition\modules\BankAccount.js --network localhost
    ```
 
 5. Update the contract address in the frontend file (`frontend/index.html`) with the deployed contract address.

@@ -1,171 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBank - Decentralized Banking</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #45a049;
-            --background-color: #f4f4f4;
-            --card-color: #ffffff;
-            --text-color: #333333;
-        }
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
-        }
-        .sidebar h1 {
-            margin-bottom: 30px;
-        }
-        .sidebar-nav {
-            list-style-type: none;
-            padding: 0;
-        }
-        .sidebar-nav li {
-            margin-bottom: 10px;
-        }
-        .sidebar-nav a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .sidebar-nav a:hover, .sidebar-nav a.active {
-            background-color: var(--secondary-color);
-        }
-        .main-content {
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .card {
-            background-color: var(--card-color);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .card h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: var(--secondary-color);
-        }
-        #accountsList {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .account-card {
-            background-color: var(--card-color);
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            width: calc(50% - 10px);
-            box-sizing: border-box;
-        }
-        #events {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        #events ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        #events li {
-            background-color: #f9f9f9;
-            border-left: 4px solid var(--primary-color);
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 4px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bank Account Test</title>
+  <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <h1>Bank Account</h1>
-            <ul class="sidebar-nav">
-                <li><a href="#" onclick="showSection('accounts')"><i class="fas fa-user"></i> Accounts</a></li>
-                <li><a href="#" onclick="showSection('create')"><i class="fas fa-plus-circle"></i> Create Account</a></li>
-                <li><a href="#" onclick="showSection('deposit')"><i class="fas fa-money-bill-wave"></i> Deposit</a></li>
-                <li><a href="#" onclick="showSection('withdraw')"><i class="fas fa-hand-holding-usd"></i> Withdraw</a></li>
-                <li><a href="#" onclick="showSection('events')"><i class="fas fa-bell"></i> Events</a></li>
-            </ul>
-        </div>
-        <div class="main-content">
-            <div id="accounts" class="card">
-                <h2>Your Accounts</h2>
-                <div id="accountsList"></div>
-                <button onclick="viewAccounts()">Refresh Accounts</button>
-            </div>
-            <div id="create" class="card" style="display:none;">
-                <h2>Create New Account</h2>
-                <input type="text" id="owners" placeholder="Other owners (comma-separated addresses)">
-                <button onclick="createAccount()">Create Account</button>
-            </div>
-            <div id="deposit" class="card" style="display:none;">
-                <h2>Deposit Funds</h2>
-                <input type="number" id="depositAmount" placeholder="Amount in ETH">
-                <input type="number" id="depositAccountId" placeholder="Account ID">
-                <button onclick="deposit()">Deposit</button>
-            </div>
-            <div id="withdraw" class="card" style="display:none;">
-                <h2>Withdraw Funds</h2>
-                <h3>Request Withdrawal</h3>
-                <input type="number" id="withdrawAmount" placeholder="Amount in ETH">
-                <input type="number" id="withdrawAccountId" placeholder="Account ID">
-                <button onclick="requestWithdrawal()">Request Withdrawal</button>
-                <h3>Approve Withdrawal</h3>
-                <input type="number" id="approveAccountId" placeholder="Account ID">
-                <input type="number" id="approveWithdrawId" placeholder="Withdraw ID">
-                <button onclick="approveWithdrawal()">Approve Withdrawal</button>
-                <h3>Complete Withdrawal</h3>
-                <input type="number" id="withdrawFinalAccountId" placeholder="Account ID">
-                <input type="number" id="withdrawFinalId" placeholder="Withdraw ID">
-                <button onclick="withdraw()">Withdraw</button>
-            </div>
-            <div id="events" class="card" style="display:none;">
-                <h2>Recent Events</h2>
-                <ul id="eventsList"></ul>
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
-    <script type="text/javascript" src="main.js"></script>
+
+  <div class="container">
+    <h3>Create Account</h3>
+    <label for="owners">Owner Name</label>
+    <input type="text" id="owners" placeholder="Enter owner name" />
+    <button onclick="createAccount()">Create Account</button>
+  </div>
+
+  <div class="container">
+    <h3>View Accounts</h3>
+    <button onclick="viewAccounts()">View Accounts</button>
+    <p id="accounts">No accounts to display</p>
+  </div>
+
+  <div id="events" class="container">
+    <h3>Events</h3>
+    <p>No events recorded.</p>
+  </div>
+
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+  <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
